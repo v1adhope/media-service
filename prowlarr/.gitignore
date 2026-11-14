@@ -1,0 +1,4 @@
+/config/*
+!/config/Definitions/
+/config/Definitions/*
+!/config/Definitions/Custom/

@@ -1,0 +1,70 @@
+version: "3"
+
+includes:
+  flaresolverr:
+    taskfile: ./flaresolverr/taskfile.yml
+    dir: ./flaresolverr
+  jellyfin:
+    taskfile: ./jellyfin/taskfile.yml
+    dir: ./jellyfin
+  sonarr:
+    taskfile: ./sonarr/taskfile.yml
+    dir: ./sonarr
+  seerr:
+    taskfile: ./seerr/taskfile.yml
+    dir: ./seerr
+  radarr:
+    taskfile: ./radarr/taskfile.yml
+    dir: ./radarr
+  prowlarr:
+    taskfile: ./prowlarr/taskfile.yml
+    dir: ./prowlarr
+  qbittorrent:
+    taskfile: ./qbittorrent/taskfile.yml
+    dir: ./qbittorrent
+
+tasks:
+  init:
+    desc: Prepare media folders and create the shared network if needed
+    cmds:
+      - sh ./scripts/init-folders.sh
+      - docker network inspect media > /dev/null 2>&1 || docker network create media
+
+  up:
+    desc: Start all video services
+    cmds:
+      - task: qbittorrent:up
+      - task: jellyfin:up
+      - task: sonarr:up
+      - task: radarr:up
+      - task: flaresolverr:up
+      - task: prowlarr:up
+      - task: seerr:up
+
+  down:
+    desc: Stop all video services and remove their containers and volumes
+    cmds:
+      - task: seerr:down
+      - task: prowlarr:down
+      - task: flaresolverr:down
+      - task: radarr:down
+      - task: sonarr:down
+      - task: jellyfin:down
+      - task: qbittorrent:down
+
+  restart:
+    desc: Recreate all video services using down and up
+    cmds:
+      - task: down
+      - task: up
+
+  update:
+    desc: Pull the latest images for all video services
+    cmds:
+      - task: jellyfin:update
+      - task: sonarr:update
+      - task: radarr:update
+      - task: prowlarr:update
+      - task: flaresolverr:update
+      - task: seerr:update
+      - task: qbittorrent:update

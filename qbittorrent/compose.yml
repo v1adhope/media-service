@@ -1,0 +1,25 @@
+services:
+  qbittorrent:
+    container_name: qbittorrent
+    image: ghcr.io/hotio/qbittorrent:latest
+    ports:
+      - "18080:18080"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Etc/UTC
+      - WEBUI_PORTS=18080/tcp
+      - LIBTORRENT=v1
+    volumes:
+      - ./config:/config
+      - ./data:/data
+      - ../radarr/data/downloads:/data/radarr/downloads
+      - ../sonarr/data/downloads:/data/sonarr/downloads
+    restart: unless-stopped
+    networks:
+      - media
+
+networks:
+  media:
+    external: true
