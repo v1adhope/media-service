@@ -111,6 +111,15 @@ After startup, configure these integrations in the applications' web interfaces 
 
 Bind mounts determine where application settings, downloads, libraries, and cache persist.
 
+For the current mounts, add these entries under **Settings → Download Clients → Remote Path Mappings** in the corresponding application:
+
+| Application | Host | Remote Path | Local Path |
+| --- | --- | --- | --- |
+| Radarr | `qbittorrent` | `/data/radarr/downloads/` | `/data/downloads/` |
+| Sonarr | `qbittorrent` | `/data/sonarr/downloads/` | `/data/downloads/` |
+
+The Host must match the host configured for that application's qBittorrent download client. These mappings translate the paths reported by qBittorrent to the same files inside Radarr or Sonarr. If the Docker download-directory warning appears, verify the mapping and run **System → Tasks → Check Health** after saving it.
+
 ## Common commands
 
 | Command | Effect |
