@@ -100,6 +100,16 @@ task up
 
 Run `task init` before the first startup to [create the mounted folders and library subfolders and set their ownership](scripts/init-folders.sh), then prepare the shared network. The folder setup uses `sudo`. Use `task up` to start the services on subsequent runs. Ensure the proxy endpoint referenced in FlareSolverr's configuration is reachable.
 
+You may want to link the show and movie libraries into your main media folder, such as `~/Videos`:
+
+```sh
+mkdir -p ~/Videos
+ln -sv ~/Projects/repos/servers/media-service/sonarr/data/shows ~/Videos/
+ln -sv ~/Projects/repos/servers/media-service/radarr/data/movies ~/Videos/
+```
+
+Adjust the repository path and destination folder for your setup. This creates `~/Videos/shows` and `~/Videos/movies` as symbolic links without copying the media files. The `-s` flag creates symbolic links, and `-v` prints each link as it is created.
+
 After startup, configure these integrations in the applications' web interfaces using the folders prepared by `task init`:
 
 1. **qBittorrent:** create separate movie and TV download categories and set each category's **Save path** to the corresponding container-side download mount in [its Compose file](qbittorrent/compose.yml).
