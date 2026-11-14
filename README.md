@@ -109,6 +109,8 @@ After startup, configure these integrations in the applications' web interfaces 
 5. **Jellyfin:** add Movies and TV libraries pointing to the existing shared library directories at their container paths, and configure library scans.
 6. **Seerr:** connect Jellyfin, Radarr, and Sonarr using their internal addresses and required credentials/API keys. Select the library root folders and quality profiles for requests.
 
+To open items with **Play on Jellyfin**, go to Seerr's **Settings → Media Server → Jellyfin** and set **External URL** to `http://localhost:8096`. Keep **Internal URL** as `http://jellyfin:8096`, click **Save**, then refresh the item's page. For browsers on another computer or phone, use the server's LAN address instead of `localhost`.
+
 Bind mounts determine where application settings, downloads, libraries, and cache persist.
 
 For the current mounts, add these entries under **Settings → Download Clients → Remote Path Mappings** in the corresponding application:
