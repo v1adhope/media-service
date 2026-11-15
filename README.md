@@ -132,6 +132,20 @@ For the current mounts, add these entries under **Settings → Download Clients 
 
 The Host must match the host configured for that application's qBittorrent download client. These mappings translate the paths reported by qBittorrent to the same files inside Radarr or Sonarr. If the Docker download-directory warning appears, verify the mapping and run **System → Tasks → Check Health** after saving it.
 
+### Stop seeding after download and clean up imported downloads
+
+In **qBittorrent → Settings → BitTorrent → Seeding Limits**:
+
+1. Enable **When ratio reaches** and set it to **`0`**.
+2. Set the action to **Stop torrent** (**Pause** in older versions).
+3. Click **Save**.
+
+In both **Sonarr and Radarr → Settings → Download Clients → qBittorrent**, enable **Remove Completed** under **Completed Download Handling**. Keep torrents using the global seeding limits and a normal start state; per-torrent limits or Force Start can override this behavior.
+
+We use these settings to stop seeding when a download finishes and let Sonarr/Radarr clean up its download files after a successful import into `shows` or `movies`. Importing alone does not trigger deletion: Sonarr/Radarr retain downloads while torrents are seeding and wait for the seed goal to be reached and the torrent to stop. Choose **Stop torrent** in qBittorrent so the torrent remains available for Sonarr/Radarr to import and remove; automatic removal by qBittorrent can remove it before import.
+
+Cleanup removes the torrent and its download files while preserving the imported library files. When imports use hardlinks, the download and library entries share disk data, so keeping both entries does not use twice the space.
+
 ## Common commands
 
 | Command | Effect |
