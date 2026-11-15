@@ -38,8 +38,15 @@ If v2rayA provides the host proxy, select RoutingA as the routing mode and add t
 
 ```text
 # Media services and indexers
-domain(domain: servarr.com, domain: prowlarr.com, domain: radarr.video, domain: sonarr.tv) -> proxy
-domain(domain: nyaa.si, domain: 1337x.to, domain: rutracker.org, domain: eztvx.to) -> proxy
+domain(domain: servarr.com) -> proxy
+domain(domain: prowlarr.com) -> proxy
+domain(domain: radarr.video) -> proxy
+domain(domain: sonarr.tv) -> proxy
+domain(domain: nyaa.si) -> proxy
+domain(domain: 1337x.to) -> proxy
+domain(domain: eztvx.to) -> proxy
+domain(domain: limetorrents.fun) -> proxy
+domain(domain: thepiratebay.org, domain: apibay.org) -> proxy
 ```
 
 Save and apply the rules. Use v2rayA's HTTP rule port (`20172` by default) as the shared proxy port so these rules apply. Choose a proxy exit that can access the required services.
